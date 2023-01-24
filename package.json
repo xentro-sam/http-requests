@@ -1,0 +1,22 @@
+{
+  "name": "http-requests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "getRoute.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xentro-sam/http-requests.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xentro-sam/http-requests/issues"
+  },
+  "homepage": "https://github.com/xentro-sam/http-requests#readme",
+  "devDependencies": {
+    "eslint": "^8.32.0"
+  }
+}
