@@ -37,6 +37,14 @@ http.createServer(async (req, res) => {
     res.end(JSON.stringify(task));
     break;
   }
+
+  case 'PATCH':{
+    const id = url.split('/')[2];
+    const task = await Todo.completeTask(id);
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.end(JSON.stringify(task));
+    break;
+  }
   }
 })
   .listen(PORT, () => {
