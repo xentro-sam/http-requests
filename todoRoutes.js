@@ -1,18 +1,20 @@
-const http = require('http')
-const PORT = 3000
+const http = require('http');
+const Todo = require('./controllers');
+const PORT = 3000;
 
-http.createServer((req, res) => {
-    res.writeHead(200, {'Content-Type': 'text/html'});
+http.createServer(async (req, res) => {
+  const url = req.url;
+  const method = req.method;
 
-    let url = req.url
-
-    console.log('Hello world')
-
-    if(url === '/') {
-        res.write('Hello world')
+  switch (method) {
+  case 'GET':
+    if(url === '/tasks') {
+      const tasks = await Todo.getTasks();
+      res.writeHead(200, {'Content-Type': 'application/json'});
+      res.end(JSON.stringify(tasks));
     }
-    res.end()
+  }
 })
-.listen(PORT, () => {
-    console.log("Listening at PORT", PORT)
-})
+  .listen(PORT, () => {
+    console.log('Listening at PORT', PORT);
+  });
