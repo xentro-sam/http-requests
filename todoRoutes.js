@@ -1,5 +1,6 @@
 const http = require('http');
-const Todo = require('./controllers');
+const Todo = require('./controllers'); 
+const { getReqData } = require('./utils');
 const PORT = 3000;
 
 http.createServer(async (req, res) => {
@@ -7,7 +8,7 @@ http.createServer(async (req, res) => {
   const method = req.method;
 
   switch (method) {
-  case 'GET':
+  case 'GET': {
     if(url === '/tasks') {
       const tasks = await Todo.getTasks();
       res.writeHead(200, {'Content-Type': 'application/json'});
@@ -26,6 +27,16 @@ http.createServer(async (req, res) => {
         res.end(JSON.stringify({message: error}));
       }
     }
+    break;
+  }
+        
+  case 'POST':{
+    let taskData = await getReqData(req);
+    let task = await Todo.createTask(JSON.parse(taskData));
+    res.writeHead(201, {'Content-Type': 'application/json'});
+    res.end(JSON.stringify(task));
+    break;
+  }
   }
 })
   .listen(PORT, () => {
