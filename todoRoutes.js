@@ -23,7 +23,7 @@ http.createServer(async (req, res) => {
         res.end(JSON.stringify(task));
       }
       catch(error) {
-        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.writeHead(404, {'Content-Type': 'application/json'});
         res.end(JSON.stringify({message: error}));
       }
     }
@@ -32,9 +32,16 @@ http.createServer(async (req, res) => {
         
   case 'POST':{
     let taskData = await getReqData(req);
-    let task = await Todo.createTask(JSON.parse(taskData));
-    res.writeHead(201, {'Content-Type': 'application/json'});
-    res.end(JSON.stringify(task));
+    try {
+      taskData = JSON.parse(taskData);
+      let task = await Todo.createTask(taskData);
+      res.writeHead(201, {'Content-Type': 'application/json'});
+      res.end(JSON.stringify(task));
+    }
+    catch {
+      res.writeHead(400, {'Content-Type': 'application/json'});
+      res.end(JSON.stringify({message: 'Input is not in JSON'}));
+    }
     break;
   }
 
