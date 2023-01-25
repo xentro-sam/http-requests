@@ -46,19 +46,31 @@ http.createServer(async (req, res) => {
   }
 
   case 'PATCH':{
-    const id = url.split('/')[2];
-    const task = await Todo.completeTask(id);
-    res.writeHead(200, {'Content-Type': 'application/json'});
-    res.end(JSON.stringify(task));
+    if(url.match(/tasks\/([0-9]+)/)) {
+      const id = url.split('/')[2];
+      const task = await Todo.completeTask(id);
+      res.writeHead(200, {'Content-Type': 'application/json'});
+      res.end(JSON.stringify(task));
+    }
+    else {
+      res.writeHead(400, {'Content-Type': 'application/json'});
+      res.end(JSON.stringify({message: 'Bad Request'}));
+    }
     break;
   }
 
   case 'PUT': {
-    const id = url.split('/')[2];
-    let taskData = await getReqData(req);
-    let updatedTask = await Todo.updateTask(id, JSON.parse(taskData));
-    res.writeHead(200, {'Content-Type': 'application/json'});
-    res.end(JSON.stringify(updatedTask));
+    if(url.match(/tasks\/([0-9]+)/)) {
+      const id = url.split('/')[2];
+      let taskData = await getReqData(req);
+      let updatedTask = await Todo.updateTask(id, JSON.parse(taskData));
+      res.writeHead(200, {'Content-Type': 'application/json'});
+      res.end(JSON.stringify(updatedTask));
+    }
+    else {
+      res.writeHead(400, {'Content-Type': 'application/json'});
+      res.end(JSON.stringify({message: 'Bad Request'}));
+    }
     break;
   }
   }
