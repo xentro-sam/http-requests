@@ -60,7 +60,7 @@ class Controller {
     });
   }
   
-  static supdateTask(id, data) {
+  static updateTask(id, data) {
     return new Promise((resolve, reject) => {
       let index = getIndexFromId(id);
       if(index === -1) {
