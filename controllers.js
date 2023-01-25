@@ -11,11 +11,11 @@ function getIndexFromId(id) {
 }
 
 class Controller {
-  getTasks() {
+  static getTasks() {
     return new Promise((resolve) => resolve(taskList));
   }
     
-  getTask(id) {
+  static getTask(id) {
     return new Promise((resolve, reject) => {
       let task = taskList.find((todo) => todo.id === parseInt(id));
       if(task) {
@@ -25,7 +25,7 @@ class Controller {
     });
   }
 
-  createTask(task) {
+  static createTask(task) {
     let newId = Math.floor(2 + Math.random() * 10);
     return new Promise((resolve) => {
       let newTask = {
@@ -38,7 +38,7 @@ class Controller {
     });
   }
 
-  deleteTask(id) {
+  static deleteTask(id) {
     return new Promise((resolve, reject) => {
       let index = getIndexFromId(id);
       if(index === -1) {
@@ -49,7 +49,7 @@ class Controller {
     });
   }
 
-  completeTask(id) {
+  static completeTask(id) {
     return new Promise((resolve, reject) => {
       let index = getIndexFromId(id);
       if(index === -1) {
@@ -60,13 +60,13 @@ class Controller {
     });
   }
   
-  updateTask(id, data) {
-    return new PromiseO((resolve, reject) => {
+  static supdateTask(id, data) {
+    return new Promise((resolve, reject) => {
       let index = getIndexFromId(id);
       if(index === -1) {
         reject(`Task with id ${id} was not found`);
       }
-      taskList[index] = {...taskList[index], ...data}
+      taskList[index] = {...taskList[index], ...data};
       resolve(taskList[index]);
     });
   }
