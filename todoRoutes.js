@@ -45,6 +45,15 @@ http.createServer(async (req, res) => {
     res.end(JSON.stringify(task));
     break;
   }
+
+  case 'PUT': {
+    const id = url.split('/')[2];
+    let taskData = await getReqData(req);
+    let updatedTask = await Todo.updateTask(id, JSON.parse(taskData));
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.end(JSON.stringify(updatedTask));
+    break;
+  }
   }
 })
   .listen(PORT, () => {
